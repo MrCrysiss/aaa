@@ -16,6 +16,8 @@ public class Robot extends TimedRobot {
   Joystick m_stick = new Joystick(0);
   private final ArmFeedforward feedforward = new ArmFeedforward(0.26, 0.16, 4.36, 0.28);
   private final PIDController pid = new PIDController(0.24, 0, 0);
+  private double res_ff;
+  private double res_pid;
 
   @Override
   public void robotInit() {
@@ -58,8 +60,8 @@ public class Robot extends TimedRobot {
     this.angle = 0.20;
     }
    
-    double res_ff = feedforward.calculate(angle, 0.3 , 0.1);
-    double res_pid = pid.calculate(m_encoder.getPosition(), angle);
+     this.res_ff = feedforward.calculate(angle, 0.3 , 0.1);
+     this.res_pid = pid.calculate(m_encoder.getPosition(), angle);
     motor.setVoltage(res_ff + res_pid);
   }
 }
